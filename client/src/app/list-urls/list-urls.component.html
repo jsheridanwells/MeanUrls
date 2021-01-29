@@ -1,0 +1,37 @@
+<div class="container list-container">
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">MEAN Urls</span>
+  </nav>
+  <div class="list-main">
+    <div class="list-form p-3">
+      <h3 class="mb-sm-3">Shorten your url:</h3>
+      <form class="form-inline">
+        <div class="form-group w-100">
+          <label for="url">Url:</label>
+          <input type="text" class="form-control form-input ml-sm-3 w-50" id="url" placeholder="e.g., https://google.com"
+            [(ngModel)]="newUrl.location"
+            [ngModelOptions]="{standalone: true}"
+            (keydown)="onKeyDown($event)">
+          <button class="btn btn-primary ml-sm-5" type="button" (click)="shorten()">Shorten me!</button>
+        </div>
+        <small class="form-text text-danger p-1" *ngIf="toggleInvalidUrlMessage">Please enter a valid URL</small>
+      </form>
+    </div>
+    <div class="list-table">
+      <table class="table">
+        <thead>
+          <th>Url</th>
+          <th>Shortcut</th>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let url of urls">
+            <td>{{ url.location }}</td>
+            <td>
+              <a [routerLink]="['/open', url.code]">http://{{ host }}/open/{{ url.code }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

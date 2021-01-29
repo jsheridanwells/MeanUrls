@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { Router, Request, Response } from 'express';
-import { Url, getAllUrls, getOneUrl, addUrl } from '../services/url.service';
+import { Url, getAllUrls, getUrlByCode, addUrl } from '../services/url.service';
 
 export function urlRoutes(): Router {
   const router = express.Router();
@@ -12,7 +12,7 @@ export function urlRoutes(): Router {
 
   router.get('/:code', async (req: Request, res: Response) => {
     const code = req.params.code
-    const url = getOneUrl(code);
+    const url = getUrlByCode(code);
     res.send(url);
   });
 
