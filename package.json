@@ -8,8 +8,6 @@
     "lint": "ng lint",
     "clean": "rm -rf ./dist/api && rm -rf .dist/public",
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin",
-    "devold": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"cd ./dist/api && nodemon -r dotenv/config ./bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\"",
-    "dev:change": "nodemon -r dotenv/config ./dist/api/bin/www --watch",
     "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"nodemon -r dotenv/config ./dist/api/bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\"",
     "mongo": "docker-compose up",
     "mongo:up": "docker-compose up",

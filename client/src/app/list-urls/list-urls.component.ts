@@ -20,6 +20,10 @@ export class ListUrlsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.refreshUrls();
+  }
+
+  refreshUrls(): void {
     this.urlService.loadUrls().subscribe(urls => this.urls = urls);
   }
 
@@ -27,7 +31,10 @@ export class ListUrlsComponent implements OnInit {
     if (this.validateUrl(this.newUrl.location)) {
       this.toggleInvalidUrlMessage = false;
       this.urlService.addUrl({ location: this.newUrl.location })
-        .then((url: Url) => this.addUrl(url));
+        .then((url: Url) => {
+          this.newUrl = { location: '' };
+          this.refreshUrls();
+        });
     } else {
       this.toggleInvalidUrlMessage = true;
     }
@@ -53,7 +60,6 @@ export class ListUrlsComponent implements OnInit {
 
   private validateUrl(url: string): boolean {
     const URL_PATTERN = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$/;
-    console.log('test?', URL_PATTERN.test(url));
     return URL_PATTERN.test(url);
   }
 }
