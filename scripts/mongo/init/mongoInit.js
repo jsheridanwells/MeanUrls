@@ -7,7 +7,7 @@ function getEnvVariable(envVar, defaultValue) {
   return cat(`/tmp/${ envVar }.txt`)
 }
 
-// create application user
+// create application user and collection
 var dbUser = getEnvVariable('APP_USER', 'app_user');
 var dbPwd = getEnvVariable('APP_PWD', 'app_user()');
 var dbName = getEnvVariable('DB_NAME', 'MeanUrls');

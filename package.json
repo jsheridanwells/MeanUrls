@@ -8,7 +8,13 @@
     "lint": "ng lint",
     "clean": "rm -rf ./dist/api && rm -rf .dist/public",
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin",
-    "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"cd ./dist/api && nodemon -r ./bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\""
+    "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"cd ./dist/api && nodemon -r ./bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\"",
+    "mongo": "docker-compose up",
+    "mongo:up": "docker-compose up",
+    "mongo:clean": "docker-compose down && docker volume rm meanurls_mean_urls_data",
+    "mongo:test:build": "docker-compose -f ./docker-compose-test.yaml build",
+    "mongo:test:up": "docker-compose -f ./docker-compose-test.yaml up",
+    "mongo:test:clean": "docker-compose -f ./docker-compose-test.yaml down && docker volume rm meanurls_mean_urls_data_test"
   },
   "private": true,
   "dependencies": {

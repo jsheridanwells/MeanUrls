@@ -17,5 +17,6 @@ services:
       - APP_PWD=$APP_PWD
       - DB_NAME=$DB_NAME
       - DB_COLLECTION_NAME=$DB_COLLECTION_NAME
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
 volumes:
   mean_urls_data:
