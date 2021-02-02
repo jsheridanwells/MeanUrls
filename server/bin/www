@@ -3,10 +3,12 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv').config();
 const app = require('../app').default();
-const debug = require('debug')('NameApp:server');
+const debug = require('debug')('MeanUrls:server');
 const http = require('http');
+const mongo = require('../data/mongo').Mongo;
+
 /**
  * Get port from environment and store in Express.
  */
@@ -80,10 +82,24 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+async function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  try {
+    const url = mongo.buildMongoUrl({
+      appUser: process.env.APP_USER,
+      appPassword: process.env.APP_PWD,
+      dbName: process.env.DB_NAME,
+      dbCollectionName: process.env.DB_COLLECTION_NAME,
+      hostName: process.env.NODE_ENV !== 'production' ? 'localhost' : process.env.MONGO_HOSTNAME,
+      mongoPort: process.env.MONGO_PORT || 27017
+    });
+    await mongo.connect(url);
+    console.log('Connected to mongodb');
+  } catch(err) {
+    console.error('Unable to connect to mongodb ::: ', err);
+  }
 }
