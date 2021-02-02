@@ -19,7 +19,6 @@ export class Mongo {
       + `/${ config.dbName }`;
   }
 
-
   public static connect(url: string): Promise<any> {
     return new Promise<any>((res, rej) => {
       mongo.MongoClient.connect(url, {

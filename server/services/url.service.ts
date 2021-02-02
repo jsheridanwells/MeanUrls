@@ -1,18 +1,23 @@
+import { Mongo } from '../data/mongo';
 export interface Url {
   location:string;
   code?: string;
 }
 
-export function getAllUrls(): Url[] {
-  return testUrlList;
+export async function getAllUrls(): Promise<Url[]>{
+  const urls = await Mongo.client.db('MeanUrls').collection('Urls').find({}).toArray();
+  return urls;
 }
 
-export function getUrlByCode(code: string): Url {
-  return testUrlList.filter(url => url.code === code)[0];
+export async function getUrlByCode(code: string): Promise<Url> {
+  const url = await Mongo.client.db('MeanUrls').collection('Urls').findOne({ code });
+  return url;
 }
 
-export function addUrl(newUrl: Url): Url {
+export async function addUrl(newUrl: Url): Promise<Url> {
   const url: Url = { location: newUrl.location, code: createCode(7) };
+  const collection = await Mongo.client.db('MeanUrls').collection('Urls');
+  await collection.insertOne(url);
   return url;
 }
 
@@ -21,9 +26,3 @@ function createCode(length: number): string {
     .toString(36)
     .slice(1);
 }
-
-const testUrlList: Url[] = [
-    { location: 'https://google.com', code: 'AaBbCc1' },
-    { location: 'https://jeremywells.io', code: 'ZzYyXx9' },
-    { location: 'https://dev.to', code: 'JjKkLl5' },
-];
