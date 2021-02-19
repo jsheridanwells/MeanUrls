@@ -10,7 +10,11 @@
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin",
     "build:api": "tsc -p ./server/tsconfig.api.json",
     "start:api": "node ./dist/api/bin/www",
-    "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"nodemon -r dotenv/config ./dist/api/bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\""
+    "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"nodemon -r dotenv/config ./dist/api/bin/www --watch\" \"ng serve --proxy-config=proxy.conf.json\"",
+    "mongo": "docker-compose up",
+    "mongo:up": "docker-compose up",
+    "mongo:down": "docker-compose down",
+    "mongo:clean": "docker volume rm meanurls_mean_urls_data"
   },
   "private": true,
   "dependencies": {
