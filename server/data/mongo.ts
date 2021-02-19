@@ -10,7 +10,7 @@ export interface MongoDbConfig {
 }
 
 export class Mongo {
-  public static client: mongo.MongoClient;
+  public static client: mongo.MongoClient | null;
 
   public static buildMongoUrl(config: MongoDbConfig): string {
     return 'mongodb://'
@@ -24,9 +24,11 @@ export class Mongo {
       mongo.MongoClient.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-      }, (err
-        : any, client: mongo.MongoClient) => {
-        if (err) rej(err);
+      }, (err : any, client: mongo.MongoClient) => {
+        if (err) {
+          Mongo.client = null;
+          rej(err);
+        }
         else {
           Mongo.client = client;
           res(client);
@@ -36,6 +38,9 @@ export class Mongo {
   }
 
   public static disconnect(): void {
-    Mongo.client.close();
+    if (Mongo.client) {
+      Mongo.client.close();
+    }
+    Mongo.client = null;
   }
 }
